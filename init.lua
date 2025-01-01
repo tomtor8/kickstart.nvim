@@ -891,6 +891,26 @@ require('lazy').setup({
         },
       }
 
+      -- Require mini.tabline
+      require('mini.tabline').setup {
+        -- Your tabline configuration here
+      }
+
+      -- Function to toggle tabline based on buffer count
+      local function toggle_tabline()
+        local buf_count = #vim.fn.getbufinfo { buflisted = 1 } -- Get count of listed buffers
+        if buf_count <= 1 then
+          vim.opt.showtabline = 0 -- Disable tabline
+        else
+          vim.opt.showtabline = 2 -- Always show tabline
+        end
+      end
+
+      -- Set up autocommands to toggle tabline on buffer enter and leave
+      vim.api.nvim_create_autocmd({ 'BufEnter', 'BufLeave' }, {
+        callback = toggle_tabline,
+      })
+
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
