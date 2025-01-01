@@ -924,15 +924,15 @@ require('lazy').setup({
             -- custom mode display
             local mode = vim.fn.mode()
             local mode_abbr = {
-              n = { 'N', 'MiniStatuslineModeNormal' }, -- Normal
-              i = { 'I', 'MiniStatuslineModeInsert' }, -- Insert
-              v = { 'V', 'MiniStatuslineModeVisual' }, -- Visual
-              V = { 'V Line', 'MiniStatuslineModeVisual' }, -- Visual Line
-              [''] = { 'V Block', 'MiniStatuslineModeVisual' }, -- Visual Block
-              c = { 'C', 'MiniStatuslineModeCommand' }, -- Command-line
-              s = { 'S', 'MiniStatuslineModeOther' }, -- Select
-              R = { 'R', 'MinistatuslineModeReplace' }, -- Replace
-              t = { 'T', 'MiniStatuslineModeOther' }, -- Terminal
+              n = { '󰌽 ', 'MiniStatuslineModeNormal' }, -- Normal
+              i = { ' ', 'MiniStatuslineModeInsert' }, -- Insert
+              v = { ' ', 'MiniStatuslineModeVisual' }, -- Visual
+              V = { ' Line', 'MiniStatuslineModeVisual' }, -- Visual Line
+              [''] = { ' Block', 'MiniStatuslineModeVisual' }, -- Visual Block
+              c = { '󰘳 ', 'MiniStatuslineModeCommand' }, -- Command-line
+              s = { '󰒆 ', 'MiniStatuslineModeOther' }, -- Select
+              R = { '󰛔 ', 'MinistatuslineModeReplace' }, -- Replace
+              t = { ' ', 'MiniStatuslineModeOther' }, -- Terminal
             }
             local current_mode = mode_abbr[mode] or { mode, 'MiniStatuslineModeOther' } -- Fallback to full name if not defined
 
