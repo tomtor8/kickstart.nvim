@@ -165,6 +165,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Remap 'jk' to <Esc> in insert mode
 vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true })
+-- Remap 'gl' to $ in normal mode go to the end of line
+vim.keymap.set('n', 'gl', '$', { noremap = true, silent = true })
+-- Remap 'gh' to ^ in normal mode - move to the first nonblank character on line
+vim.keymap.set('n', 'gh', '^', { noremap = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
