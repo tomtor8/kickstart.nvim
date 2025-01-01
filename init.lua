@@ -719,6 +719,8 @@ require('lazy').setup({
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         python = { 'black' },
+        css = { 'prettier' },
+        html = { 'prettier' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -746,12 +748,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -937,9 +939,9 @@ require('lazy').setup({
             local current_mode = mode_abbr[mode] or { mode, 'MiniStatuslineModeOther' } -- Fallback to full name if not defined
 
             -- local mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-            local git = MiniStatusline.section_git { trunc_width = 40 }
-            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
-            local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
+            local git = MiniStatusline.section_git { trunc_width = 100 }
+            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 100 }
+            local lsp = MiniStatusline.section_lsp { trunc_width = 100 }
             local filename = MiniStatusline.section_filename { trunc_width = 140 }
             local location = MiniStatusline.section_location { trunc_width = 75 }
 
