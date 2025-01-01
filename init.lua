@@ -718,7 +718,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -954,16 +954,35 @@ require('lazy').setup({
           end,
           -- inactive content
           inactive = function()
-            local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+            -- custom mode display
+            local mode = vim.fn.mode()
+            local mode_abbr = {
+              n = { '󰌽 ', 'MiniStatuslineModeNormal' }, -- Normal
+              i = { ' ', 'MiniStatuslineModeInsert' }, -- Insert
+              v = { ' ', 'MiniStatuslineModeVisual' }, -- Visual
+              V = { ' Line', 'MiniStatuslineModeVisual' }, -- Visual Line
+              [''] = { ' Block', 'MiniStatuslineModeVisual' }, -- Visual Block
+              c = { '󰘳 ', 'MiniStatuslineModeCommand' }, -- Command-line
+              s = { '󰒆 ', 'MiniStatuslineModeOther' }, -- Select
+              R = { '󰛔 ', 'MinistatuslineModeReplace' }, -- Replace
+              t = { ' ', 'MiniStatuslineModeOther' }, -- Terminal
+            }
+            local current_mode = mode_abbr[mode] or { mode, 'MiniStatuslineModeOther' } -- Fallback to full name if not defined
+
+            -- local mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+            local git = MiniStatusline.section_git { trunc_width = 40 }
+            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
+            local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
             local filename = MiniStatusline.section_filename { trunc_width = 140 }
             local location = MiniStatusline.section_location { trunc_width = 75 }
 
             return MiniStatusline.combine_groups {
-              { hl = mode_hl, strings = { mode } },
+              { hl = current_mode[2], strings = { current_mode[1] } },
+              { hl = 'MiniStatuslineFileName', strings = { git, diagnostics, lsp } },
               '%<', -- Mark general truncate point
               '%=', -- End left alignment
               { hl = 'MiniStatuslineFilename', strings = { filename } },
-              { hl = mode_hl, strings = { location } },
+              { hl = current_mode[2], strings = { location } },
             }
           end,
         },
