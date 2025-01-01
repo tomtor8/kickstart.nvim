@@ -916,7 +916,58 @@ require('lazy').setup({
       --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      statusline.setup {
+        use_icons = vim.g.have_nerd_font,
+        content = {
+          -- active content
+          active = function()
+            -- custom mode display
+            local mode = vim.fn.mode()
+            local mode_abbr = {
+              n = { 'N', 'MiniStatuslineModeNormal' }, -- Normal
+              i = { 'I', 'MiniStatuslineModeInsert' }, -- Insert
+              v = { 'V', 'MiniStatuslineModeVisual' }, -- Visual
+              V = { 'V Line', 'MiniStatuslineModeVisual' }, -- Visual Line
+              [''] = { 'V Block', 'MiniStatuslineModeVisual' }, -- Visual Block
+              c = { 'C', 'MiniStatuslineModeCommand' }, -- Command-line
+              s = { 'S', 'MiniStatuslineModeOther' }, -- Select
+              R = { 'R', 'MinistatuslineModeReplace' }, -- Replace
+              t = { 'T', 'MiniStatuslineModeOther' }, -- Terminal
+            }
+            local current_mode = mode_abbr[mode] or { mode, 'MiniStatuslineModeOther' } -- Fallback to full name if not defined
+
+            -- local mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+            local git = MiniStatusline.section_git { trunc_width = 40 }
+            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
+            local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
+            local filename = MiniStatusline.section_filename { trunc_width = 140 }
+            local location = MiniStatusline.section_location { trunc_width = 75 }
+
+            return MiniStatusline.combine_groups {
+              { hl = current_mode[2], strings = { current_mode[1] } },
+              { hl = 'MiniStatuslineFileName', strings = { git, diagnostics, lsp } },
+              '%<', -- Mark general truncate point
+              '%=', -- End left alignment
+              { hl = 'MiniStatuslineFilename', strings = { filename } },
+              { hl = current_mode[2], strings = { location } },
+            }
+          end,
+          -- inactive content
+          inactive = function()
+            local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+            local filename = MiniStatusline.section_filename { trunc_width = 140 }
+            local location = MiniStatusline.section_location { trunc_width = 75 }
+
+            return MiniStatusline.combine_groups {
+              { hl = mode_hl, strings = { mode } },
+              '%<', -- Mark general truncate point
+              '%=', -- End left alignment
+              { hl = 'MiniStatuslineFilename', strings = { filename } },
+              { hl = mode_hl, strings = { location } },
+            }
+          end,
+        },
+      }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
