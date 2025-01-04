@@ -182,6 +182,11 @@ vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('n', 'gl', '$', { noremap = true, silent = true })
 -- Remap 'gh' to ^ in normal mode - move to the first nonblank character on line
 vim.keymap.set('n', 'gh', '^', { noremap = true, silent = true })
+-- select the whole document
+vim.keymap.set('n', 'sa', 'ggVG', { noremap = true, silent = true })
+
+-- import skeleton files and templates, custom snippets
+-- vim.keymap.set('n', ',html', ':-1read /home/tom/Templates/html/basic-html-skeleton.html<CR>', { noremap = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
