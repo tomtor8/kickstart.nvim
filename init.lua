@@ -98,6 +98,19 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- enable fuzzy search using :find command in command mode
+-- you can use only a part of the name and use *
+-- search works recursively in subfolders
+-- Add '**' to the path option
+vim.opt.path:append '**'
+-- enable tab and shift tab to move between find results
+vim.opt.wildmenu = true
+
+-- Disable netrw banner in Neovim
+-- enter netrw using :find or :edit directory name or .
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3 -- tree view
+
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
