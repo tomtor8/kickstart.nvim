@@ -307,7 +307,14 @@ require('lazy').setup({
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
-  { -- Useful plugin to show you pending keybinds.
+  -- lualine statusline
+  {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+  },
+
+  
+ { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -952,91 +959,91 @@ require('lazy').setup({
         callback = toggle_tabline,
       })
 
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup {
-        use_icons = vim.g.have_nerd_font,
-        content = {
-          -- active content
-          active = function()
-            -- custom mode display
-            local mode = vim.fn.mode()
-            local mode_abbr = {
-              n = { '󰌽 ', 'MiniStatuslineModeNormal' }, -- Normal
-              i = { ' ', 'MiniStatuslineModeInsert' }, -- Insert
-              v = { ' ', 'MiniStatuslineModeVisual' }, -- Visual
-              V = { ' Line', 'MiniStatuslineModeVisual' }, -- Visual Line
-              [''] = { ' Block', 'MiniStatuslineModeVisual' }, -- Visual Block
-              c = { '󰘳 ', 'MiniStatuslineModeCommand' }, -- Command-line
-              s = { '󰒆 ', 'MiniStatuslineModeOther' }, -- Select
-              R = { '󰛔 ', 'MinistatuslineModeReplace' }, -- Replace
-              t = { ' ', 'MiniStatuslineModeOther' }, -- Terminal
-            }
-            local current_mode = mode_abbr[mode] or { mode, 'MiniStatuslineModeOther' } -- Fallback to full name if not defined
-
-            -- local mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-            local git = MiniStatusline.section_git { trunc_width = 100 }
-            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 100 }
-            local lsp = MiniStatusline.section_lsp { trunc_width = 100 }
-            local filename = MiniStatusline.section_filename { trunc_width = 140 }
-            local location = MiniStatusline.section_location { trunc_width = 75 }
-
-            return MiniStatusline.combine_groups {
-              { hl = current_mode[2], strings = { current_mode[1] } },
-              { hl = 'MiniStatuslineFileName', strings = { git, diagnostics, lsp } },
-              '%<', -- Mark general truncate point
-              '%=', -- End left alignment
-              { hl = 'MiniStatuslineFilename', strings = { filename } },
-              { hl = current_mode[2], strings = { location } },
-            }
-          end,
-          -- inactive content
-          inactive = function()
-            -- custom mode display
-            local mode = vim.fn.mode()
-            local mode_abbr = {
-              n = { '󰌽 ', 'MiniStatuslineModeNormal' }, -- Normal
-              i = { ' ', 'MiniStatuslineModeInsert' }, -- Insert
-              v = { ' ', 'MiniStatuslineModeVisual' }, -- Visual
-              V = { ' Line', 'MiniStatuslineModeVisual' }, -- Visual Line
-              [''] = { ' Block', 'MiniStatuslineModeVisual' }, -- Visual Block
-              c = { '󰘳 ', 'MiniStatuslineModeCommand' }, -- Command-line
-              s = { '󰒆 ', 'MiniStatuslineModeOther' }, -- Select
-              R = { '󰛔 ', 'MinistatuslineModeReplace' }, -- Replace
-              t = { ' ', 'MiniStatuslineModeOther' }, -- Terminal
-            }
-            local current_mode = mode_abbr[mode] or { mode, 'MiniStatuslineModeOther' } -- Fallback to full name if not defined
-
-            -- local mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-            local git = MiniStatusline.section_git { trunc_width = 40 }
-            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
-            local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
-            local filename = MiniStatusline.section_filename { trunc_width = 140 }
-            local location = MiniStatusline.section_location { trunc_width = 75 }
-
-            return MiniStatusline.combine_groups {
-              { hl = current_mode[2], strings = { current_mode[1] } },
-              { hl = 'MiniStatuslineFileName', strings = { git, diagnostics, lsp } },
-              '%<', -- Mark general truncate point
-              '%=', -- End left alignment
-              { hl = 'MiniStatuslineFilename', strings = { filename } },
-              { hl = current_mode[2], strings = { location } },
-            }
-          end,
-        },
-      }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%l|%v|%p%%'
-        -- return '%p%%'
-      end
+      -- -- Simple and easy statusline.
+      -- --  You could remove this setup call if you don't like it,
+      -- --  and try some other statusline plugin
+      -- local statusline = require 'mini.statusline'
+      -- -- set use_icons to true if you have a Nerd Font
+      -- statusline.setup {
+      --   use_icons = vim.g.have_nerd_font,
+      --   content = {
+      --     -- active content
+      --     active = function()
+      --       -- custom mode display
+      --       local mode = vim.fn.mode()
+      --       local mode_abbr = {
+      --         n = { '󰌽 ', 'MiniStatuslineModeNormal' }, -- Normal
+      --         i = { ' ', 'MiniStatuslineModeInsert' }, -- Insert
+      --         v = { ' ', 'MiniStatuslineModeVisual' }, -- Visual
+      --         V = { ' Line', 'MiniStatuslineModeVisual' }, -- Visual Line
+      --         [''] = { ' Block', 'MiniStatuslineModeVisual' }, -- Visual Block
+      --         c = { '󰘳 ', 'MiniStatuslineModeCommand' }, -- Command-line
+      --         s = { '󰒆 ', 'MiniStatuslineModeOther' }, -- Select
+      --         R = { '󰛔 ', 'MinistatuslineModeReplace' }, -- Replace
+      --         t = { ' ', 'MiniStatuslineModeOther' }, -- Terminal
+      --       }
+      --       local current_mode = mode_abbr[mode] or { mode, 'MiniStatuslineModeOther' } -- Fallback to full name if not defined
+      --
+      --       -- local mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+      --       local git = MiniStatusline.section_git { trunc_width = 100 }
+      --       local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 100 }
+      --       local lsp = MiniStatusline.section_lsp { trunc_width = 100 }
+      --       local filename = MiniStatusline.section_filename { trunc_width = 140 }
+      --       local location = MiniStatusline.section_location { trunc_width = 75 }
+      --
+      --       return MiniStatusline.combine_groups {
+      --         { hl = current_mode[2], strings = { current_mode[1] } },
+      --         { hl = 'MiniStatuslineFileName', strings = { git, diagnostics, lsp } },
+      --         '%<', -- Mark general truncate point
+      --         '%=', -- End left alignment
+      --         { hl = 'MiniStatuslineFilename', strings = { filename } },
+      --         { hl = current_mode[2], strings = { location } },
+      --       }
+      --     end,
+      --     -- inactive content
+      --     inactive = function()
+      --       -- custom mode display
+      --       local mode = vim.fn.mode()
+      --       local mode_abbr = {
+      --         n = { '󰌽 ', 'MiniStatuslineModeNormal' }, -- Normal
+      --         i = { ' ', 'MiniStatuslineModeInsert' }, -- Insert
+      --         v = { ' ', 'MiniStatuslineModeVisual' }, -- Visual
+      --         V = { ' Line', 'MiniStatuslineModeVisual' }, -- Visual Line
+      --         [''] = { ' Block', 'MiniStatuslineModeVisual' }, -- Visual Block
+      --         c = { '󰘳 ', 'MiniStatuslineModeCommand' }, -- Command-line
+      --         s = { '󰒆 ', 'MiniStatuslineModeOther' }, -- Select
+      --         R = { '󰛔 ', 'MinistatuslineModeReplace' }, -- Replace
+      --         t = { ' ', 'MiniStatuslineModeOther' }, -- Terminal
+      --       }
+      --       local current_mode = mode_abbr[mode] or { mode, 'MiniStatuslineModeOther' } -- Fallback to full name if not defined
+      --
+      --       -- local mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+      --       local git = MiniStatusline.section_git { trunc_width = 40 }
+      --       local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
+      --       local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
+      --       local filename = MiniStatusline.section_filename { trunc_width = 140 }
+      --       local location = MiniStatusline.section_location { trunc_width = 75 }
+      --
+      --       return MiniStatusline.combine_groups {
+      --         { hl = current_mode[2], strings = { current_mode[1] } },
+      --         { hl = 'MiniStatuslineFileName', strings = { git, diagnostics, lsp } },
+      --         '%<', -- Mark general truncate point
+      --         '%=', -- End left alignment
+      --         { hl = 'MiniStatuslineFilename', strings = { filename } },
+      --         { hl = current_mode[2], strings = { location } },
+      --       }
+      --     end,
+      --   },
+      -- }
+      --
+      -- -- You can configure sections in the statusline by overriding their
+      -- -- default behavior. For example, here we set the section for
+      -- -- cursor location to LINE:COLUMN
+      -- ---@diagnostic disable-next-line: duplicate-set-field
+      -- statusline.section_location = function()
+      --   return '%l|%v|%p%%'
+      --   -- return '%p%%'
+      -- end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
