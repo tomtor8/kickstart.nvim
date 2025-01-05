@@ -79,8 +79,10 @@ If you experience any errors while trying to install kickstart, run `:checkhealt
 I hope you enjoy your Neovim journey,
 - TJ
 
-P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+
+-- Detect the operating system
+local os_name = vim.loop.os_uname().sysname
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -872,7 +874,13 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'catppuccin-latte'
+      if os_name == 'Darwin' then
+        vim.cmd.colorscheme 'catppuccin-mocha'
+      elseif os_name == 'Linux' then
+        vim.cmd.colorscheme 'catppuccin-latte'
+      else
+        vim.cmd.colorscheme 'catppuccin-latte'
+      end
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
