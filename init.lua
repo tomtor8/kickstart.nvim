@@ -914,6 +914,8 @@ require('lazy').setup({
       --  - ci'  - [C]ange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
 
+      require('mini.starter').setup()
+
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       require('mini.surround').setup {
         mappings = {
