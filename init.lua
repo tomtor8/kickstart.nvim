@@ -115,7 +115,7 @@ vim.g.netrw_liststyle = 3 -- tree view
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -169,7 +169,7 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- [[ Basic Keymaps ]]
+--          KEYBINDINGS            --
 --  See `:help vim.keymap.set()`
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -184,6 +184,19 @@ vim.keymap.set('n', 'gl', '$', { noremap = true, silent = true })
 vim.keymap.set('n', 'gh', '^', { noremap = true, silent = true })
 -- select the whole document
 vim.keymap.set('n', 'sa', 'ggVG', { noremap = true, silent = true })
+
+-- toggle relative number
+-- Function to toggle relative line numbers
+function ToggleRelativeNumber()
+  if vim.wo.relativenumber then
+    vim.wo.relativenumber = false
+  else
+    vim.wo.relativenumber = true
+  end
+end
+
+-- Map the function to a key (e.g., F2)
+vim.keymap.set('n', 'sr', ':lua ToggleRelativeNumber()<CR>', { noremap = true, silent = true })
 
 -- import skeleton files and templates, custom snippets
 -- vim.keymap.set('n', ',html', ':-1read /home/tom/Templates/html/basic-html-skeleton.html<CR>', { noremap = true, silent = true })
