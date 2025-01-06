@@ -113,7 +113,7 @@ function ToggleRelativeNumber()
 end
 
 -- Map the function to a key (e.g., F2)
-vim.keymap.set('n', 'sr', ':lua ToggleRelativeNumber()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>tr', ':lua ToggleRelativeNumber()<CR>', { noremap = true, silent = true, desc = 'Toggle Relative Numbers' })
 
 -- import skeleton files and templates, custom snippets
 -- vim.keymap.set('n', ',html', ':-1read /home/tom/Templates/html/basic-html-skeleton.html<CR>', { noremap = true, silent = true })
