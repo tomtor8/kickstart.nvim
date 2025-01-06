@@ -1,6 +1,19 @@
 -- Detect the operating system
 local os_name = vim.loop.os_uname().sysname
 
+-- Ensure viminfo is set to save marks and cursor positions
+vim.opt.viminfo:append 'f1'
+
+-- Autocommand to jump to the last cursor position when opening a file
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*',
+  callback = function()
+    if vim.fn.line '\'"' > 0 and vim.fn.line '\'"' <= vim.fn.line '$' then
+      vim.cmd 'normal! g`"'
+    end
+  end,
+})
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -96,9 +109,9 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Remap 'jk' to <Esc> in insert mode
 vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true })
 -- Remap 'gl' to $ in normal mode go to the end of line
-vim.keymap.set('n', 'gl', '$', { noremap = true, silent = true })
+vim.keymap.set('n', 'gl', '$', { noremap = true, silent = true, desc = 'Go to End of Line' })
 -- Remap 'gh' to ^ in normal mode - move to the first nonblank character on line
-vim.keymap.set('n', 'gh', '^', { noremap = true, silent = true })
+vim.keymap.set('n', 'gh', '^', { noremap = true, silent = true, desc = 'Go to First Character on Line' })
 -- select the whole document
 vim.keymap.set('n', 'sa', 'ggVG', { noremap = true, silent = true })
 
