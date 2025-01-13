@@ -177,6 +177,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Function to set wrap options
+local function set_wrap_options()
+  -- vim.opt_local.textwidth = 80 -- Set maximum width for wrapping
+  vim.opt_local.wrap = true -- Enable line wrapping
+  vim.opt_local.linebreak = true -- Prevent splitting words
+end
+
+-- Create autocommands for Markdown and text files to wrap
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown', 'text' }, -- Match both Markdown and text files
+  callback = set_wrap_options,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
