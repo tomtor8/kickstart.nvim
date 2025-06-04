@@ -110,6 +110,8 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Remap 'jk' to <Esc> in insert mode
 vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true })
+-- Remap 'jj' to <Esc> and jump to end to insert mode
+vim.keymap.set('i', 'jj', '<Esc>A', { noremap = true, silent = true })
 -- Remap 'gl' to $ in normal mode go to the end of line
 vim.keymap.set('n', 'gl', '$', { noremap = true, silent = true, desc = 'Go to End of Line' })
 -- Remap 'gh' to ^ in normal mode - move to the first nonblank character on line
@@ -790,7 +792,7 @@ require('lazy').setup({
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<C-p>'] = cmp.mapping.complete {},
+          -- ['<C-p>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
